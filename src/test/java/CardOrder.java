@@ -8,8 +8,8 @@ public class CardOrder {
     @Test
     void shouldTestCorrectForm() {
         open("http://localhost:9999/");
-        $("[data-test-id=name] input").setValue("Игорь Попов");
-        $("[data-test-id='phone'] input").setValue("+79875556565");
+        $("[data-test-id=name] input").setValue("Виктория Патрина");
+        $("[data-test-id='phone'] input").setValue("+79876543210");
         $("[data-test-id='agreement']").click();
         $(".button__content").click();
         $("[data-test-id=order-success]").shouldHave(exactText("Ваша заявка успешно отправлена! Наш менеджер свяжется с вами в ближайшее время."));
@@ -17,11 +17,20 @@ public class CardOrder {
     @Test
     void shouldTestNotCorrectName() {
         open("http://localhost:9999/");
-        $("[data-test-id=name] input").setValue("Igor Popov");
-        $("[data-test-id='phone'] input").setValue("+79875556565");
+        $("[data-test-id=name] input").setValue("Victoria Patrina");
+        $("[data-test-id='phone'] input").setValue("+79876543210");
         $("[data-test-id='agreement']").click();
         $(".button__content").click();
-        $("[data-test-id=name].input_invalid .input__sub").shouldHave(exactText("Имя и Фамилия указаные неверн. Допустимы только русские буквы, пробелы и дефисы."));
+        $("[data-test-id=name].input_invalid .input__sub").shouldHave(exactText("Имя и Фамилия указаные неверно. Допустимы только русские буквы, пробелы и дефисы."));
+    }
+    @Test
+    void shouldTestNotCorrectPhone() {
+        open("http://localhost:9999/");
+        $("[data-test-id=name] input").setValue("Виктория Патрина");
+        $("[data-test-id='phone'] input").setValue("123456");
+        $("[data-test-id='agreement']").click();
+        $(".button__content").click();
+        $("[data-test-id=phone].input_invalid .input__sub").shouldHave(exactText("Телефон указан неверно. Должно быть 11 цифр, например, +79012345678."));
     }
 
 
