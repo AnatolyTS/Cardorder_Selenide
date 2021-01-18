@@ -32,6 +32,29 @@ public class CardOrder {
         $(".button__content").click();
         $("[data-test-id=phone].input_invalid .input__sub").shouldHave(exactText("Телефон указан неверно. Должно быть 11 цифр, например, +79012345678."));
     }
+    @Test
+    void shouldTestEmptyName() {
+        open("http://localhost:9999/");
+        $("[data-test-id='phone'] input").setValue("+79876543210");
+        $("[data-test-id='agreement']").click();
+        $(".button__content").click();
+        $("[data-test-id=phone].input_invalid .input__sub").shouldHave(exactText("Поле обязательно для заполнения"));
+    }
+    @Test
+    void shouldTestEmptyPhone() {
+        open("http://localhost:9999/");
+        $("[data-test-id=name] input").setValue("Виктория Патрина");
+        $("[data-test-id='agreement']").click();
+        $(".button__content").click();
+        $("[data-test-id=phone].input_invalid .input__sub").shouldHave(exactText("Поле обязательно для заполнения"));
+    }
+    @Test
+    void shouldTestEmptyPhoneAndName() {
+        open("http://localhost:9999/");
+        $("[data-test-id='agreement']").click();
+        $(".button__content").click();
+        $("[data-test-id=name].input_invalid .input__sub").shouldHave(exactText("Поле обязательно для заполнения"));
+    }
 
 
 }
