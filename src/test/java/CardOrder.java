@@ -38,7 +38,7 @@ public class CardOrder {
         $("[data-test-id='phone'] input").setValue("+79876543210");
         $("[data-test-id='agreement']").click();
         $(".button__content").click();
-        $("[data-test-id=phone].input_invalid .input__sub").shouldHave(exactText("Поле обязательно для заполнения"));
+        $("[data-test-id=name].input_invalid .input__sub").shouldHave(exactText("Поле обязательно для заполнения"));
     }
     @Test
     void shouldTestEmptyPhone() {
@@ -55,6 +55,15 @@ public class CardOrder {
         $(".button__content").click();
         $("[data-test-id=name].input_invalid .input__sub").shouldHave(exactText("Поле обязательно для заполнения"));
     }
+    @Test
+    void shouldTestNotAgreement() {
+        open("http://localhost:9999/");
+        $("[data-test-id=name] input").setValue("Виктория Патрина");
+        $("[data-test-id='phone'] input").setValue("+79876543210");
+        $(".button__content").click();
+        $("[data-test-id=agreement]").shouldHave(exactText("Я соглашаюсь с условиями обработки и использования моих персональных данных и разрешаю сделать запрос в бюро кредитных историй"));
+    }
+
 
 
 }
